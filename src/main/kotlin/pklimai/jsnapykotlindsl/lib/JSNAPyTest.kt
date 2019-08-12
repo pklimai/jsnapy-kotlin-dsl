@@ -1,0 +1,51 @@
+package pklimai.jsnapykotlindsl.lib
+
+import java.lang.StringBuilder
+
+// Represents a single JSNAPy test
+class JSNAPyTest {
+    lateinit var name: String
+
+    // Either command or rpc, not both
+    var command: String? = null
+    var rpc: String? = null
+    // kwargs is only for rpc
+    var kwargs: MutableList<Pair<String, String>>? = null
+
+    var item: JSNAPyItem? = null
+    var iterate: String? = null
+
+
+    override fun toString() = StringBuilder().apply {
+        append("$name:\n")
+        if (rpc != null && command == null) {
+            append(" - rpc: $rpc\n")
+            if (kwargs != null) {
+                append("   kwargs:\n")
+                kwargs!!.forEach { append("     ${it.first}: ${it.second}\n") }
+            }
+        }
+        else if (rpc == null && command != null) {
+            append(" - command: $command\n")
+            if (kwargs != null) terminate("'kwargs' is only for 'rpc'")
+        }
+        else terminate("'rpc' XOR 'command' must be present (not both)")
+
+        if (item != null && iterate==null) {
+            append(" - item:\n")
+            with(item!!) {
+                if (xpath != null) append("     xpath: $xpath\n")
+                if (tests.isNotEmpty()) {
+                    append("     tests:\n")
+                    tests.forEach {
+                        append("       - ${it.testop}: ${it.values}\n")
+                        append("         err: ${it.err}\n")
+                        append("         info: ${it.info}\n")
+                    }
+                }
+            }
+        }
+
+    }.toString()
+
+}
