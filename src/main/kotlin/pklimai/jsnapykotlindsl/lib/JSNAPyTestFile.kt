@@ -8,7 +8,7 @@ class JSNAPyTestFile {
     val tests = mutableListOf<JSNAPyTest>()
 
     // Optional list of test names to execute - by default, all tests will be executed
-    val testsInclude = mutableListOf<String>()
+    val testsInclude = ListOfTestsInclude()
 
     override fun toString() = StringBuilder().apply {
         tests.forEach{ append(it) }

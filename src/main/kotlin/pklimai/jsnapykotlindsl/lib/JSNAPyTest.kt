@@ -10,7 +10,7 @@ class JSNAPyTest {
     var command: String? = null
     var rpc: String? = null
     // kwargs is only for rpc
-    var kwargs: MutableList<Pair<String, String>>? = null
+    val kwargs = mutableListOf<Pair<String, String>>()
 
     var item: JSNAPyItem? = null
     var iterate: String? = null
@@ -20,14 +20,14 @@ class JSNAPyTest {
         append("$name:\n")
         if (rpc != null && command == null) {
             append(" - rpc: $rpc\n")
-            if (kwargs != null) {
+            if (kwargs.isNotEmpty()) {
                 append("   kwargs:\n")
-                kwargs!!.forEach { append("     ${it.first}: ${it.second}\n") }
+                kwargs.forEach { append("     ${it.first}: ${it.second}\n") }
             }
         }
         else if (rpc == null && command != null) {
             append(" - command: $command\n")
-            if (kwargs != null) terminate("'kwargs' is only for 'rpc'")
+            if (kwargs.isNotEmpty()) terminate("'kwargs' is only for 'rpc'")
         }
         else terminate("'rpc' XOR 'command' must be present (not both)")
 
@@ -45,7 +45,5 @@ class JSNAPyTest {
                 }
             }
         }
-
     }.toString()
-
 }

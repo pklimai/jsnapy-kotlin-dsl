@@ -4,16 +4,17 @@ import pklimai.jsnapykotlindsl.lib.*
 
 fun main() {
     val myTestFile = createJSNAPyTestFile {
+//        jsnapyTest {
+//            name = "First test"
+//            command = "show interfaces"
+//        }
         jsnapyTest {
-            name = "First test"
-            command = "show interfaces"
-        }
-        jsnapyTest {
-            name = "Second test"
+            name = "Test interface admin status"
             rpc = "get-interface-information"
-            kwargs = mutableListOf(Pair("terse", "True"), Pair("name", "ge-0/0/0"))
+            kwarg("terse", "True")
+            //kwarg("name", "ge-0/0/0")
             item {
-                xpath = "XPATH"
+                xpath = "physical-interface"
                 testClause {
                     testop = "equals"
                     values = "admin-status, up"
@@ -22,9 +23,10 @@ fun main() {
                 }
             }
         }
-        testInclude("First test")
-        testInclude("Second test")
+        testsInclude {
+            +"Test interface admin status"
+            //+"Second test"
+        }
     }
     print(myTestFile)
 }
-
