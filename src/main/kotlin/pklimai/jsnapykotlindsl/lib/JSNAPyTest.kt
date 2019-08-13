@@ -1,7 +1,5 @@
 package pklimai.jsnapykotlindsl.lib
 
-import java.lang.StringBuilder
-
 // Represents a single JSNAPy test
 class JSNAPyTest {
     lateinit var name: String
@@ -25,7 +23,7 @@ class JSNAPyTest {
         iterate = JSNAPyIterate().apply(block)
     }
 
-    override fun toString() = StringBuilder().apply {
+    override fun toString() = buildString {
         append("$name:\n")
         if (rpc != null && command == null) {
             append(" - rpc: $rpc\n")
@@ -41,33 +39,13 @@ class JSNAPyTest {
         else terminate("'rpc' XOR 'command' must be present (not both)")
 
         if (item != null && iterate == null) {
-            append(" - item:\n")
-            with(item!!) {
-                if (xpath != null) append("     xpath: $xpath\n")
-                if (id != null) append("     id: $id\n")
-                if (tests.isNotEmpty()) {
-                    append("     tests:\n")
-                    tests.forEach {
-                        append("       - ${it.testop}: ${it.values}\n")
-                        append("         err: ${it.err}\n")
-                        append("         info: ${it.info}\n")
-                    }
-                }
-            }
-        } else if (item == null && iterate != null) {
-            append(" - iterate:\n")
-            with(iterate!!) {
-                if (xpath != null) append("     xpath: $xpath\n")
-                if (id != null) append("     id: $id\n")
-                if (tests.isNotEmpty()) {
-                    append("     tests:\n")
-                    tests.forEach {
-                        append("       - ${it.testop}: ${it.values}\n")
-                        append("         err: ${it.err}\n")
-                        append("         info: ${it.info}\n")
-                    }
-                }
-            }
+            append(item.toString())
         }
-    }.toString()
+        else if (item == null && iterate != null) {
+            append(iterate.toString())
+        }
+        else if (item != null && iterate != null) {
+            terminate("'item' OR 'iterate' must be present (but not both)")
+        }
+    }
 }

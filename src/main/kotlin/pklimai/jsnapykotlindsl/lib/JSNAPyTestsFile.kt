@@ -1,9 +1,7 @@
 package pklimai.jsnapykotlindsl.lib
 
-import java.lang.StringBuilder
-
 // Represents a file with JSNAPy tests
-class JSNAPyTestFile {
+class JSNAPyTestsFile {
     // Test definitions
     private val tests = mutableListOf<JSNAPyTest>()
 
@@ -18,11 +16,11 @@ class JSNAPyTestFile {
         testsInclude.apply(block)
     }
 
-    override fun toString() = StringBuilder().apply {
+    override fun toString() = buildString {
         tests.forEach{ append(it) }
         if (testsInclude.isNotEmpty()) {
             append("tests_include:\n")
             testsInclude.forEach { append(" - $it\n") }
         }
-    }.toString()
+    }
 }

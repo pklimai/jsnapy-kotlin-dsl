@@ -7,4 +7,4 @@ fun terminate(message: String) {
     exitProcess(1)
 }
 
-fun createJSNAPyTestFile(block: JSNAPyTestFile.() -> Unit) = JSNAPyTestFile().apply(block)
+fun createJSNAPyTestFile(block: JSNAPyTestsFile.() -> Unit) = JSNAPyTestsFile().apply(block)
