@@ -11,10 +11,19 @@ class JSNAPyTest {
     var rpc: String? = null
     // kwargs is only for rpc
     val kwargs = mutableListOf<Pair<String, String>>()
+    fun kwarg(key: String, value: String) {
+        kwargs.add(Pair(key, value))
+    }
 
     var item: JSNAPyItem? = null
-    var iterate: String? = null
+    fun item(block: JSNAPyItem.() -> Unit) {
+        item = JSNAPyItem().apply(block)
+    }
 
+    var iterate: JSNAPyIterate? = null
+    fun iterate(block: JSNAPyIterate.() -> Unit) {
+        iterate = JSNAPyIterate().apply(block)
+    }
 
     override fun toString() = StringBuilder().apply {
         append("$name:\n")
@@ -31,10 +40,25 @@ class JSNAPyTest {
         }
         else terminate("'rpc' XOR 'command' must be present (not both)")
 
-        if (item != null && iterate==null) {
+        if (item != null && iterate == null) {
             append(" - item:\n")
             with(item!!) {
                 if (xpath != null) append("     xpath: $xpath\n")
+                if (id != null) append("     id: $id\n")
+                if (tests.isNotEmpty()) {
+                    append("     tests:\n")
+                    tests.forEach {
+                        append("       - ${it.testop}: ${it.values}\n")
+                        append("         err: ${it.err}\n")
+                        append("         info: ${it.info}\n")
+                    }
+                }
+            }
+        } else if (item == null && iterate != null) {
+            append(" - iterate:\n")
+            with(iterate!!) {
+                if (xpath != null) append("     xpath: $xpath\n")
+                if (id != null) append("     id: $id\n")
                 if (tests.isNotEmpty()) {
                     append("     tests:\n")
                     tests.forEach {

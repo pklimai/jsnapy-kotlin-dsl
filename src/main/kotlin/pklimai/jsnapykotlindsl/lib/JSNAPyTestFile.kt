@@ -5,10 +5,18 @@ import java.lang.StringBuilder
 // Represents a file with JSNAPy tests
 class JSNAPyTestFile {
     // Test definitions
-    val tests = mutableListOf<JSNAPyTest>()
+    private val tests = mutableListOf<JSNAPyTest>()
+
+    fun jsnapyTest(block: JSNAPyTest.() -> Unit) {
+        tests.add(JSNAPyTest().apply(block))
+    }
 
     // Optional list of test names to execute - by default, all tests will be executed
-    val testsInclude = ListOfTestsInclude()
+    private val testsInclude = ListOfTestsInclude()
+
+    fun testsInclude(block: ListOfTestsInclude.() -> Unit) {
+        testsInclude.apply(block)
+    }
 
     override fun toString() = StringBuilder().apply {
         tests.forEach{ append(it) }

@@ -11,9 +11,9 @@ starts its work based on that YAML data. Then, because of some "wrong" setting i
 to figure out what the initial issue was based on the visible symptoms like error messages and the location of 
 where execution was terminated. Also, maintenance of 1000s-line YAML files is rarely a pleasant pastime. 
 
-This happens because YAML defines a structure that is inherently dynamic; there is nothing like XML schema to constrain
-possible key values and nesting of lists and mappings. No type checking is performed both for primitive
-values or for nested structures. 
+One of the reasons why this happens is because YAML defines a structure that is inherently dynamic; there is nothing
+like formal XML schema or data model to constrain possible key values and nesting of lists and mappings. No type 
+checking is performed both for primitive values or for nested structures. 
 
 To add to this, systems often tend to work with mutable state - that is, the system does not work with original YAML 
 data directly, but instead, some intermediate data structures are created, making it even harder to figure out what 
@@ -22,11 +22,11 @@ went wrong.
 Shall we avoid using YAML then? We will see what happens in future, but for now it is clearly not possible
 having in mind its widespreadness. Instead, one approach is to build required YAML files from a higher-level
 DSL (domain specific language) that can check many of possible errors in the very beginning (before the
-file is sent to processing). 
+file is sent for actual processing). 
 
-Kotlin language is very good at building internal DSLs. You can find a good introduction 
-[here](https://medium.com/@antonarhipov/awesome-kotlin-domain-specific-languages-f1870be41b0), but let me show just one
-simple example from [Kotlin in Action](https://www.manning.com/books/kotlin-in-action): 
+[Kotlin](https://kotlinlang.org/) language is very good at building internal DSLs. You can find a good introduction 
+[here](https://medium.com/@antonarhipov/awesome-kotlin-domain-specific-languages-f1870be41b0), but let me show 
+just one simple example from [Kotlin in Action](https://www.manning.com/books/kotlin-in-action) book: 
 ```kotlin
 fun createSimpleTable() = createHTML().
     table {
@@ -41,8 +41,9 @@ project page.
 
 ## Kotlin DSL for JSNAPy - Project Details
 
-Here, I use Kotlin internal DSL to generate YAML files for JSNAPy, a popular tool for testing Junos OS-based
-networks. Here is an example of YAML test file that JSNAPy expects:
+It looks like many other tools can benefit from building a corresponding Kotlin DSL as well. In this repository
+(work in progress) I build Kotlin DSL to generate YAML test files for [JSNAPy](https://github.com/Juniper/jsnapy), a 
+popular tool for testing Junos OS-based networks. Here is an example of YAML test file that JSNAPy expects:
 ```yaml
 Test interface admin status:
   - rpc: get-interface-information
@@ -59,16 +60,17 @@ tests_include:
 ```
 Now, how do you know that for example `rpc` and `kwargs` must belong to one list element, and `iterate` is the
 next list element? Of course, from documentation and available examples. But if you make an error, the system 
-does not correct you.
+does not warn you before you see a runtime error. Nothing like auto-completion is available when you edit
+your YAML file in the editor.
 
-Using this project, the test is rewritten as follows:
+Using DSL developed here, the test is rewritten as follows:
 ```kotlin
 val myTestFile = createJSNAPyTestFile {
     jsnapyTest {
         name = "Test interface admin status"
         rpc = "get-interface-information"
         kwarg("terse", "True")
-        item {
+        iterate {
             xpath = "physical-interface"
             testClause {
                 testop = "equals"
@@ -85,6 +87,9 @@ val myTestFile = createJSNAPyTestFile {
 ```   
 This may look not look like a big deal, but the advantages of writing JSNAPy tests using Kotlin DSL include:
 - Context-aware structure checking (what element is allowed in each hierarchy)
-- Type checking
 - Autocompletion, when working from IDE like IntelliJ IDEA
+- Type checking
 - Some extra semantic checks
+
+As previously noted, this project is experimental and a work in progress; feel free to comment and contribute in
+any way. For example you can create an issue, a pull request, or reach me at Twitter, @JuniperTrain handle.
