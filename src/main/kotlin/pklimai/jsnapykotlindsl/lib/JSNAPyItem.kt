@@ -1,7 +1,7 @@
 package pklimai.jsnapykotlindsl.lib
 
 class JSNAPyItem {
-    lateinit var xpath: String
+    var xpath: String? = null
     var id: String? = null
     val tests = mutableListOf<TestClause>()
 

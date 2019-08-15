@@ -66,8 +66,7 @@ your YAML file in the editor.
 Using DSL developed here, the test is rewritten as follows:
 ```kotlin
 val myTestFile = createJSNAPyTestFile {
-    jsnapyTest {
-        name = "Test interface admin status"
+    jsnapyTest("Test interface admin status") {
         rpc = "get-interface-information"
         kwarg("terse", "True")
         iterate {

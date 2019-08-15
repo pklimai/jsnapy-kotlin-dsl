@@ -5,8 +5,8 @@ class JSNAPyTestsFile {
     // Test definitions
     private val tests = mutableListOf<JSNAPyTest>()
 
-    fun jsnapyTest(block: JSNAPyTest.() -> Unit) {
-        tests.add(JSNAPyTest().apply(block))
+    fun jsnapyTest(name: String, block: JSNAPyTest.() -> Unit) {
+        tests.add(JSNAPyTest(name).apply(block))
     }
 
     // Optional list of test names to execute - by default, all tests will be executed

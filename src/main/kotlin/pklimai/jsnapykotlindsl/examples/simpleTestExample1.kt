@@ -4,12 +4,10 @@ import pklimai.jsnapykotlindsl.lib.*
 
 fun main() {
     val myTestFile = createJSNAPyTestFile {
-        jsnapyTest {
-            name = "First test"
+        jsnapyTest("First test") {
             command = "show interfaces"
         }
-        jsnapyTest {
-            name = "Test interface admin status"
+        jsnapyTest("Test interface admin status") {
             rpc = "get-interface-information"
             kwarg("terse", "True")
             //kwarg("name", "ge-0/0/0")

@@ -1,8 +1,7 @@
 package pklimai.jsnapykotlindsl.lib
 
 // Represents a single JSNAPy test
-class JSNAPyTest {
-    lateinit var name: String
+class JSNAPyTest(val name: String) {
 
     // Either command or rpc, not both
     var command: String? = null
