@@ -1,6 +1,10 @@
 package pklimai.jsnapykotlindsl.examples
 
 import pklimai.jsnapykotlindsl.lib.*
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.KotlinModule
 
 fun main() {
     val myTestFile = createJSNAPyTestFile {
@@ -27,5 +31,14 @@ fun main() {
             +"Second test"
         }
     }
-    print(myTestFile)
+    // print(myTestFile)  // Using 'toString'
+
+    val mapper = ObjectMapper(YAMLFactory())
+    // See e.g. https://www.baeldung.com/jackson-ignore-null-fields
+    mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL)
+    // This is to avoid empty collections like kwargs: []
+    mapper.setSerializationInclusion(JsonInclude.Include.NON_DEFAULT)
+    mapper.registerModule(KotlinModule())
+    println(mapper.writeValueAsString(myTestFile))
+
 }

@@ -3,14 +3,16 @@ package pklimai.jsnapykotlindsl.lib
 // Represents a file with JSNAPy tests
 class JSNAPyTestsFile {
     // Test definitions
-    private val tests = mutableListOf<JSNAPyTest>()
+    @SuppressWarnings // Do not make private, or Jackson serialization does not work
+    val tests = mutableListOf<JSNAPyTest>()
 
     fun jsnapyTest(name: String, block: JSNAPyTest.() -> Unit) {
         tests.add(JSNAPyTest(name).apply(block))
     }
 
     // Optional list of test names to execute - by default, all tests will be executed
-    private val testsInclude = ListOfTestsInclude()
+    @SuppressWarnings // Do not make private, or Jackson serialization does not work
+    val testsInclude = ListOfTestsInclude()
 
     fun testsInclude(block: ListOfTestsInclude.() -> Unit) {
         testsInclude.apply(block)
