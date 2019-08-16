@@ -14,7 +14,7 @@ fun main() {
         jsnapyTest("Test interface admin status") {
             rpc = "get-interface-information"
             kwarg("terse", "True")
-            //kwarg("name", "ge-0/0/0")
+            kwarg("name", "ge-0/0/0")
             iterate {
                 xpath = "physical-interface"
                 id = "./name"
@@ -31,14 +31,7 @@ fun main() {
             +"Second test"
         }
     }
-    // print(myTestFile)  // Using 'toString'
 
-    val mapper = ObjectMapper(YAMLFactory())
-    // See e.g. https://www.baeldung.com/jackson-ignore-null-fields
-    mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL)
-    // This is to avoid empty collections like kwargs: []
-    mapper.setSerializationInclusion(JsonInclude.Include.NON_DEFAULT)
-    mapper.registerModule(KotlinModule())
-    println(mapper.writeValueAsString(myTestFile))
+    print(myTestFile.toYAML())
 
 }

@@ -7,9 +7,9 @@ class JSNAPyTest(val name: String) {
     var command: String? = null
     var rpc: String? = null
     // kwargs is only for rpc
-    val kwargs = mutableListOf<Pair<String, String>>()
+    val kwargs = linkedMapOf<String, String>() // Use linked map to keep insertion order
     fun kwarg(key: String, value: String) {
-        kwargs.add(Pair(key, value))
+        kwargs[key] = value
     }
 
     var item: JSNAPyItem? = null
@@ -28,7 +28,7 @@ class JSNAPyTest(val name: String) {
             append(" - rpc: $rpc\n")
             if (kwargs.isNotEmpty()) {
                 append("   kwargs:\n")
-                kwargs.forEach { append("     ${it.first}: ${it.second}\n") }
+                kwargs.forEach { append("     ${it.key}: ${it.value}\n") }
             }
         }
         else if (rpc == null && command != null) {

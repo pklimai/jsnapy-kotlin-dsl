@@ -1,5 +1,10 @@
 package pklimai.jsnapykotlindsl.lib
 
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
+import com.fasterxml.jackson.module.kotlin.KotlinModule
+
 // Represents a file with JSNAPy tests
 class JSNAPyTestsFile {
     // Test definitions
@@ -18,11 +23,22 @@ class JSNAPyTestsFile {
         testsInclude.apply(block)
     }
 
-    override fun toString() = buildString {
-        tests.forEach{ append(it) }
-        if (testsInclude.isNotEmpty()) {
-            append("tests_include:\n")
-            testsInclude.forEach { append(" - $it\n") }
-        }
+//    override fun toString() = buildString {
+//        tests.forEach{ append(it) }
+//        if (testsInclude.isNotEmpty()) {
+//            append("tests_include:\n")
+//            testsInclude.forEach { append(" - $it\n") }
+//        }
+//    }
+
+    fun toYAML(): String {
+        val mapper = ObjectMapper(YAMLFactory())
+        // See e.g. https://www.baeldung.com/jackson-ignore-null-fields
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL)
+        // This is to avoid empty collections like kwargs: []
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_DEFAULT)
+        mapper.registerModule(KotlinModule())
+        return mapper.writeValueAsString(this)
     }
+
 }

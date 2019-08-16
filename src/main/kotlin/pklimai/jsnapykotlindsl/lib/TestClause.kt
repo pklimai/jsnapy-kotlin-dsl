@@ -6,10 +6,10 @@ class TestClause {
     var info: String? = null
     var err: String? = null
 
-    override fun toString() = buildString {
-        append("       - $testop: $values\n")
-        append("         err: $err\n")
-        append("         info: $info\n")
-    }
+//    override fun toString() = buildString {
+//        append("       - $testop: $values\n")
+//        append("         err: $err\n")
+//        append("         info: $info\n")
+//    }
 
 }
