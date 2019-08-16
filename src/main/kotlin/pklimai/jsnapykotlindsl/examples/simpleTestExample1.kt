@@ -1,10 +1,6 @@
 package pklimai.jsnapykotlindsl.examples
 
 import pklimai.jsnapykotlindsl.lib.*
-import com.fasterxml.jackson.annotation.JsonInclude
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.KotlinModule
 
 fun main() {
     val myTestFile = createJSNAPyTestFile {
