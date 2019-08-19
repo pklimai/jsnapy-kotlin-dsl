@@ -1,6 +1,7 @@
 package pklimai.jsnapykotlindsl.lib
 
 // Represents a single JSNAPy test
+@YAMLElementMarker
 class JSNAPyTest(val name: String) {
 
     // Either command or rpc, not both

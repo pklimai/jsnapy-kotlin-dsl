@@ -6,6 +6,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 
 // Represents a file with JSNAPy tests
+@YAMLElementMarker
 class JSNAPyTestsFile {
     // Test definitions
     @SuppressWarnings // Do not make private, or Jackson serialization does not work
@@ -22,14 +23,6 @@ class JSNAPyTestsFile {
     fun testsInclude(block: ListOfTestsInclude.() -> Unit) {
         testsInclude.apply(block)
     }
-
-//    override fun toString() = buildString {
-//        tests.forEach{ append(it) }
-//        if (testsInclude.isNotEmpty()) {
-//            append("tests_include:\n")
-//            testsInclude.forEach { append(" - $it\n") }
-//        }
-//    }
 
     fun toYAML(): String {
         val mapper = ObjectMapper(YAMLFactory())
