@@ -91,4 +91,5 @@ This may look not look like a big deal, but the advantages of writing JSNAPy tes
 - Some extra semantic checks
 
 As previously noted, this project is experimental and a work in progress; feel free to comment and contribute in
-any way. For example you can create an issue, a pull request, or reach me at Twitter, @JuniperTrain handle.
+any way. For example you can create an issue, a pull request, or reach me at Twitter, 
+[@JuniperTrain](https://twitter.com/JuniperTrain) handle.

@@ -2,7 +2,7 @@ package pklimai.jsnapykotlindsl.lib
 
 // Represents a single JSNAPy test
 @YAMLElementMarker
-class JSNAPyTest(val name: String) {
+class JSNAPyTest() {
 
     // Either command or rpc, not both
     var command: String? = null
@@ -23,29 +23,29 @@ class JSNAPyTest(val name: String) {
         iterate = JSNAPyIterate().apply(block)
     }
 
-    override fun toString() = buildString {
-        append("$name:\n")
-        if (rpc != null && command == null) {
-            append(" - rpc: $rpc\n")
-            if (kwargs.isNotEmpty()) {
-                append("   kwargs:\n")
-                kwargs.forEach { append("     ${it.key}: ${it.value}\n") }
-            }
-        }
-        else if (rpc == null && command != null) {
-            append(" - command: $command\n")
-            if (kwargs.isNotEmpty()) terminate("'kwargs' is only for 'rpc'")
-        }
-        else terminate("'rpc' XOR 'command' must be present (not both)")
-
-        if (item != null && iterate == null) {
-            append(item.toString())
-        }
-        else if (item == null && iterate != null) {
-            append(iterate.toString())
-        }
-        else if (item != null && iterate != null) {
-            terminate("'item' OR 'iterate' must be present (but not both)")
-        }
-    }
+//    override fun toString() = buildString {
+//        append("$name:\n")
+//        if (rpc != null && command == null) {
+//            append(" - rpc: $rpc\n")
+//            if (kwargs.isNotEmpty()) {
+//                append("   kwargs:\n")
+//                kwargs.forEach { append("     ${it.key}: ${it.value}\n") }
+//            }
+//        }
+//        else if (rpc == null && command != null) {
+//            append(" - command: $command\n")
+//            if (kwargs.isNotEmpty()) terminate("'kwargs' is only for 'rpc'")
+//        }
+//        else terminate("'rpc' XOR 'command' must be present (not both)")
+//
+//        if (item != null && iterate == null) {
+//            append(item.toString())
+//        }
+//        else if (item == null && iterate != null) {
+//            append(iterate.toString())
+//        }
+//        else if (item != null && iterate != null) {
+//            terminate("'item' OR 'iterate' must be present (but not both)")
+//        }
+//    }
 }
