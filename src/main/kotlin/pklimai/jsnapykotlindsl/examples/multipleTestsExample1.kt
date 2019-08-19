@@ -15,9 +15,8 @@ fun main() {
                 xpath = "physical-interface"
                 id = "./name"
                 testClause {
-                    testop = "is-equal"
-                    values = "admin-status, up"
-                    info = "Test Succeeded for {{pre['name']}}"
+                    condition("is-equal", "admin-status, up")
+                    info ="Test Succeeded for {{pre['name']}}"
                     err = "Test Failed for {{pre['name']}}"
                 }
             }
