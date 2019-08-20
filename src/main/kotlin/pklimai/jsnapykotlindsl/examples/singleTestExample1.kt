@@ -9,7 +9,6 @@ fun main() {
             kwarg("terse", "True")
             iterate {
                 xpath = "physical-interface"
-                id = "./name"
                 testClause {
                     condition("is-equal", "admin-status, up")
                     info = "Test Succeeded for {{pre['name']}}"

@@ -16,20 +16,31 @@ class ListElementItemORIterate: JSNAPyTestListElements() {
 }
 
 // Represents a single JSNAPy test
+// This class is a bit crazy and you are welcome to rewrite it...
 @YAMLElementMarker
 class JSNAPyTest: ArrayList<JSNAPyTestListElements>() {
-    init {
-        add(ListElementRPCorCommand())
-        add(ListElementItemORIterate())
-    }
+
+    private var commandORrpcAdded: Boolean = false
 
     var command: String? = null
         set(value) {
+            if (!commandORrpcAdded) {
+                add(ListElementRPCorCommand())
+                commandORrpcAdded = true
+            }
+            else {
+                terminate("command or rpc already added")
+            }
             (this[0] as ListElementRPCorCommand).command = value
         }
 
     var rpc: String? = null
         set(value) {
+            if (commandORrpcAdded) {
+                terminate("command or rpc already added")
+            }
+            add(ListElementRPCorCommand())
+            commandORrpcAdded = true
             (this[0] as ListElementRPCorCommand).rpc = value
         }
 
@@ -38,11 +49,17 @@ class JSNAPyTest: ArrayList<JSNAPyTestListElements>() {
     }
 
     fun item(block: JSNAPyItem.() -> Unit) {
-        (this[1] as ListElementItemORIterate).item = JSNAPyItem().apply(block)
+        if (commandORrpcAdded) {
+            add(ListElementItemORIterate())
+            (this[1] as ListElementItemORIterate).item = JSNAPyItem().apply(block)
+        }
     }
 
     fun iterate(block: JSNAPyIterate.() -> Unit) {
-        (this[1] as ListElementItemORIterate).iterate = JSNAPyIterate().apply(block)
+        if (commandORrpcAdded) {
+            add(ListElementItemORIterate())
+            (this[1] as ListElementItemORIterate).iterate = JSNAPyIterate().apply(block)
+        }
     }
 
 }

@@ -72,8 +72,7 @@ val myTestFile = createJSNAPyTestFile {
         iterate {
             xpath = "physical-interface"
             testClause {
-                testop = "equals"
-                values = "admin-status, up"
+                condition("is-equal", "admin-status, up")
                 info = "Test Succeeded for {{pre['name']}}"
                 err = "Test Failed for {{pre['name']}}"
             }

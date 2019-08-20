@@ -6,13 +6,9 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 
-interface HasTestSInclude {
-    fun testsInclude(block: ListOfTestsInclude.() -> Unit)
-}
-
 // Represents a file with JSNAPy tests
 @YAMLElementMarker
-class JSNAPyTestsFile: LinkedHashMap<String, JSNAPyTest>(), HasTestSInclude {
+class JSNAPyTestsFile: LinkedHashMap<String, JSNAPyTest>() {
 
     fun jsnapyTest(name: String, block: JSNAPyTest.() -> Unit) {
         this[name]=JSNAPyTest().apply(block)
@@ -21,7 +17,7 @@ class JSNAPyTestsFile: LinkedHashMap<String, JSNAPyTest>(), HasTestSInclude {
     // Optional list of test names to execute - by default, all tests will be executed
     val testsInclude = ListOfTestsInclude()
 
-    override fun testsInclude(block: ListOfTestsInclude.() -> Unit) {
+    fun testsInclude(block: ListOfTestsInclude.() -> Unit) {
         testsInclude.apply(block)
     }
 
