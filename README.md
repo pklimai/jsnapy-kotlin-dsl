@@ -1,6 +1,13 @@
 # Kotlin DSL for JSNAPy (experimental)
 
-## Introduction
+## Overview
+
+In this repository I try to build pre-processor (or DSL) that will allow creation of 
+[JSNAPy](https://github.com/Juniper/jsnapy) YAML test files using Kotlin language.
+
+I expect that the same idea can be used for many other DevOps tools (e.g. Ansible and Salt).   
+
+## Introduction: Why not to YAML?
 
 Many if not most automation tools use YAML these days. YAML advantages are well-known (relative simplicity, conciseness, 
 human readability and editability, JSON compatibility, etc.). However, any good thing is only good until
